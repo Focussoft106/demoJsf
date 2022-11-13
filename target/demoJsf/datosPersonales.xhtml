@@ -1,0 +1,216 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:view contentType="text/html">
+    <h:head>
+        <title>Prueba JSF</title>
+        <h:outputStylesheet library="css" name="style.css"/>
+    </h:head>
+    <h:body>
+            <f:facet name="title"  >
+                <h1>Datos personales</h1>
+            </f:facet>
+
+            <h:form id="form">
+                <p:growl id="msg" />
+                <h2>Datos personales</h2>
+                <p:toolbar>
+                    <p:toolbarGroup align="right">
+                        <p:commandButton value="Nuevo" icon="pi pi-plus" update=":form:newDisplay" oncomplete="PF('nuevoWidget').show()">
+                        </p:commandButton>
+                    </p:toolbarGroup>
+                </p:toolbar>
+                <div class="card">
+                    <p:panel>
+                        <p:dataTable id="table" var="datosPersonal" value="#{datosPersonalesView.datosPersonalesList}">
+                            <p:column headerText="Identificación">
+                                <h:outputText value="#{datosPersonal.identificacion}" />
+                            </p:column>
+
+                            <p:column headerText="Primer nombre">
+                                <h:outputText value="#{datosPersonal.primerNombre}" />
+                            </p:column>
+
+                            <p:column headerText="Segundo nombre">
+                                <h:outputText value="#{datosPersonal.segundoNombre}" />
+                            </p:column>
+
+                            <p:column headerText="Primer apellido">
+                                <h:outputText value="#{datosPersonal.primerApellido}" />
+                            </p:column>
+                            <p:column headerText="Segundo apellido">
+                                <h:outputText value="#{datosPersonal.segundoApellido}" />
+                            </p:column>
+
+                            <p:column headerText="Fecha de Nacimiento">
+                                <h:outputText value="#{datosPersonal.fechaNace}"  pattern="dd-MMM-yyyy">
+                                    <f:convertDateTime type="date" timeZone="UTF" pattern="dd-MMM-yyyy" />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column headerText="Estado civil">
+                                <h:outputText value="#{datosPersonal.estadoCivil}" />
+                            </p:column>
+
+                            <p:column headerText="Género">
+                                <h:outputText value="#{datosPersonal.genero}" />
+                            </p:column>
+
+                            <p:column headerText="Ocupación">
+                                <h:outputText value="#{datosPersonal.ocupacion}" />
+                            </p:column>
+                            <p:column style="text-align: center">
+                                <p:commandButton id="detailButton" icon="pi pi-eye" update=":form:detailDisplay" oncomplete="PF('detailWidget').show()">
+                                    <f:setPropertyActionListener value="#{datosPersonal}" target="#{datosPersonalesView.datosPersonales}" />
+                                </p:commandButton>
+                                <p:commandButton icon="pi pi-pencil" update=":form:editDisplay" oncomplete="PF('editWidget').show()">
+                                    <f:setPropertyActionListener value="#{datosPersonal}" target="#{datosPersonalesView.datosPersonales}" />
+                                </p:commandButton>
+                                <p:commandButton icon="pi pi-trash" update=":form:removeDialog" oncomplete="PF('removeWidget').show()">
+                                    <f:setPropertyActionListener value="#{datosPersonal}" target="#{datosPersonalesView.datosPersonales}" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </p:panel>
+                    <p:dialog header="Detalles" widgetVar="detailWidget"
+                              resizable="false" modal="true">
+
+                        <h:panelGrid id="detailDisplay" columns="2" cellpadding="4"
+                                     style="margin:0 auto;">
+
+                            <h:outputText value="identificacion:" />
+                            <h:outputText value="#{datosPersonalesView.datosPersonales.identificacion}"
+                                          style="font-weight:bold" />
+
+                            <h:outputText value="Primer Nombre:" />
+                            <h:outputText value="#{datosPersonalesView.datosPersonales.primerNombre}"
+                                          style="font-weight:bold" />
+
+                            <h:outputText value="segundo Nombre" />
+                            <h:outputText value="#{datosPersonalesView.datosPersonales.segundoNombre}"
+                                          style="font-weight:bold" />
+
+                            <h:outputText value="Primer Apellido:" />
+                            <h:outputText value="#{datosPersonalesView.datosPersonales.primerApellido}"
+                                          style="font-weight:bold" />
+
+                            <h:outputText value="Segundo Apellido" />
+                            <h:outputText value="#{datosPersonalesView.datosPersonales.segundoApellido}"
+                                          style="font-weight:bold" />
+
+                            <h:outputText value="Fecha Nace" />
+                            <h:outputText value="#{datosPersonalesView.datosPersonales.fechaNace}"  pattern="dd-MMM-yyyy" style="font-weight:bold">
+                                <f:convertDateTime type="date" timeZone="UTF" pattern="dd-MMM-yyyy" />
+                            </h:outputText>
+
+                            <h:outputText value="Estado Civil" />
+                            <h:outputText value="#{datosPersonalesView.datosPersonales.estadoCivil}"
+                                          style="font-weight:bold" />
+
+                            <h:outputText value="Género" />
+                            <h:outputText value="#{datosPersonalesView.datosPersonales.genero}"
+                                          style="font-weight:bold" />
+
+                            <h:outputText value="Ocupación" />
+                            <h:outputText value="#{datosPersonalesView.datosPersonales.ocupacion}"
+                                          style="font-weight:bold" />
+
+                        </h:panelGrid>
+                    </p:dialog>
+
+                    <p:dialog header="Editar" widgetVar="editWidget" resizable="false"
+                              modal="true">
+
+                        <h:panelGrid id="editDisplay" columns="2" cellpadding="4"
+                                     style="margin:0 auto;">
+
+                            <h:outputText value="identificacion:" />
+                            <p:inputText value="#{datosPersonalesView.datosPersonales.identificacion}"/>
+
+                            <h:outputText value="Primer Nombre:" />
+                            <p:inputText value="#{datosPersonalesView.datosPersonales.primerNombre}" />
+
+                            <h:outputText value="segundo Nombre" />
+                            <p:inputText value="#{datosPersonalesView.datosPersonales.segundoNombre}" />
+
+                            <h:outputText value="Primer Apellido:" />
+                            <p:inputText value="#{datosPersonalesView.datosPersonales.primerApellido}" />
+
+                            <h:outputText value="Segundo Apellido" />
+                            <p:inputText value="#{datosPersonalesView.datosPersonales.segundoApellido}" />
+
+                            <h:outputText value="Fecha Nace" />
+                            <p:calendar id="button" value="#{datosPersonalesView.datosPersonales.fechaNace}" showOn="button" />
+
+                            <h:outputText value="Estado Civil" />
+                            <p:inputText value="#{datosPersonalesView.datosPersonales.estadoCivil}" />
+
+                            <h:outputText value="Género"  />
+                            <p:inputText value="#{datosPersonalesView.datosPersonales.genero}" />
+
+                            <h:outputText value="Ocupación" />
+                            <p:inputText value="#{datosPersonalesView.datosPersonales.ocupacion}" />
+
+                            <p:commandButton value="Guardar" icon="ui-icon-check"
+                                             action="#{datosPersonalesView.atualizar}" oncomplete="PF('editWidget').hide()"
+                                             update="table, msg" />
+
+                        </h:panelGrid>
+                    </p:dialog>
+
+                    <p:dialog header="Nuevo" widgetVar="nuevoWidget" resizable="false"
+                              modal="true">
+
+                        <h:panelGrid id="newDisplay" columns="2" cellpadding="4"
+                                     style="margin:0 auto;">
+
+                            <h:outputText value="identificacion:" />
+                            <p:inputText value="#{datosPersonalesView.datosPersonales.identificacion}"/>
+
+                            <h:outputText value="Primer Nombre:" />
+                            <p:inputText value="#{datosPersonalesView.datosPersonales.primerNombre}" />
+
+                            <h:outputText value="segundo Nombre" />
+                            <p:inputText value="#{datosPersonalesView.datosPersonales.segundoNombre}" />
+
+                            <h:outputText value="Primer Apellido:" />
+                            <p:inputText value="#{datosPersonalesView.datosPersonales.primerApellido}" />
+
+                            <h:outputText value="Segundo Apellido" />
+                            <p:inputText value="#{datosPersonalesView.datosPersonales.segundoApellido}" />
+
+                            <h:outputText value="Fecha Nace" />
+                            <p:calendar id="buttonNew" value="#{datosPersonalesView.datosPersonales.fechaNace}" showOn="button" />
+
+                            <h:outputText value="Estado Civil" />
+                            <p:inputText value="#{datosPersonalesView.datosPersonales.estadoCivil}" />
+
+                            <h:outputText value="Género"  />
+                            <p:inputText value="#{datosPersonalesView.datosPersonales.genero}" />
+
+                            <h:outputText value="Ocupación" />
+                            <p:inputText value="#{datosPersonalesView.datosPersonales.ocupacion}" />
+
+                            <p:commandButton value="Guardar" icon="ui-icon-check"
+                                             action="#{datosPersonalesView.guardar}" oncomplete="PF('nuevoWidget').hide()"
+                                             update="newDisplay, table, msg" />
+
+                        </h:panelGrid>
+                    </p:dialog>
+                    <p:confirmDialog id="removeDialog" widgetVar="removeWidget" header="Eliminar datos"
+                                     message="Desea eliminar a #{datosPersonalesView.datosPersonales.identificacion}?"
+                                     severity="alert" >
+
+                        <p:commandButton value="Aceptar" icon="ui-icon-check" action="#{datosPersonalesView.remover}"
+                                         oncomplete="PF('removeWidget').hide()" update="table, msg" />
+                    </p:confirmDialog>
+                </div>
+            </h:form>
+
+    </h:body>
+</f:view>
+</html>
+

@@ -1,0 +1,19 @@
+.btnNew{
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+    margin: 5%;
+}
+
+.edit-button{
+    background: #689f38;
+    color: #fff;
+    border: 1px solid #689f38;
+    border-radius: 50%;
+    height: 2.357rem;
+}
+
+.delete-button{
+    border-radius: 50%;
+    height: 2.357rem;
+}
